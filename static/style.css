@@ -1,0 +1,101 @@
+body {
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: linear-gradient(135deg, #f0f4ff, #eaf7ff);
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 32px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #1f3c88;
+  text-align: center;
+}
+h1 span {
+  color: #0077ff;
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+}
+
+textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ccd6f6;
+  border-radius: 10px;
+  font-size: 1rem;
+  resize: vertical;
+  transition: all 0.3s;
+}
+textarea:focus {
+  border-color: #0077ff;
+  box-shadow: 0 0 6px rgba(0, 119, 255, 0.4);
+  outline: none;
+}
+
+input[type=file] {
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+button {
+  margin-top: 16px;
+  background: linear-gradient(135deg, #0077ff, #0055cc);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: transform 0.2s, background 0.3s;
+}
+button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #0055cc, #0044aa);
+}
+
+.result {
+  margin-top: 28px;
+  padding: 18px;
+  border-left: 5px solid #0077ff;
+  background: #f9fbff;
+  border-radius: 8px;
+  animation: fadeInUp 0.5s ease;
+}
+.result h2, .result h3 {
+  margin-top: 0;
+}
+
+.reply {
+  white-space: pre-wrap;
+  background: #f3f6fb;
+  padding: 14px;
+  border-radius: 8px;
+  font-family: "Courier New", monospace;
+  border: 1px solid #e0e6f0;
+}
+
+/* Animações sutis */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95);}
+  to { opacity: 1; transform: scale(1);}
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
