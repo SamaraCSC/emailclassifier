@@ -1,12 +1,9 @@
-# classifier.py
-# Contém funções para extrair texto, pré-processar, classificar e gerar resposta com Gemini.
 import os
 import re
 from typing import Dict
 import google.generativeai as genai
 from PyPDF2 import PdfReader
 
-# Carrega a chave de API do Gemini do ambiente
 try:
     genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
     GEMINI_AVAILABLE = True
@@ -14,7 +11,6 @@ except Exception as e:
     print(f"Erro ao configurar Gemini: {e}")
     GEMINI_AVAILABLE = False
 
-# Simple stopwords (pt-BR small set)
 STOPWORDS = set("""a o e de do da em no na os as dos das um uma uns umas com por para como sobre que quem quando onde porque pelo""".split())
 
 def extract_text_from_file(file_stream, filename: str) -> str:
@@ -51,7 +47,6 @@ def gemini_classify_and_respond(text: str) -> Dict[str, str]:
 
     model = genai.GenerativeModel('gemini-pro')
 
-    # Prompt para classificação
     prompt_classify = f"""
     Classifique o seguinte email como 'Produtivo' ou 'Improdutivo'.
     'Produtivo' se o email exigir uma ação ou resposta específica (suporte, dúvida, status).
@@ -63,7 +58,6 @@ def gemini_classify_and_respond(text: str) -> Dict[str, str]:
     response_classify = model.generate_content(prompt_classify)
     category = response_classify.text.strip()
 
-    # Define o prompt de resposta com base na categoria
     if 'produtivo' in category.lower():
         prompt_reply = f"""
         Você é um assistente de email corporativo.
@@ -86,7 +80,6 @@ def gemini_classify_and_respond(text: str) -> Dict[str, str]:
 
     return {'category': category, 'response': reply}
 
-
 def classify_and_respond(text: str, use_gemini: bool = True) -> Dict[str, str]:
     """Função principal que orquestra a classificação e resposta."""
     if not text or not text.strip():
@@ -97,12 +90,9 @@ def classify_and_respond(text: str, use_gemini: bool = True) -> Dict[str, str]:
             return gemini_classify_and_respond(text)
         except Exception as e:
             print(f"Erro na API do Gemini, usando fallback: {e}")
-            # Se a API falhar, usa o método baseado em regras
             return rule_based_classify_and_respond(text)
     else:
-        # Se Gemini não estiver disponível, usa o método baseado em regras
         return rule_based_classify_and_respond(text)
-
 
 def rule_based_classify_and_respond(text: str) -> Dict[str, str]:
     """Classificador simples baseado em palavras-chave como alternativa."""
@@ -119,6 +109,5 @@ def rule_based_classify_and_respond(text: str) -> Dict[str, str]:
         reply = 'Obrigado pelo contato. Recebemos sua solicitação e retornaremos em breve. Para agilizar, poderia nos fornecer o número do protocolo ou mais detalhes sobre o caso?'
     else:
         category = 'Improdutivo'
-        reply = 'Obrigado pela sua mensagem!'
-        
+        reply = 'Obrigado pela sua mensagem!'      
     return {'category': category, 'response': reply}
