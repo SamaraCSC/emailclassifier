@@ -48,10 +48,11 @@ def gemini_classify_and_respond(text: str) -> Dict[str, str]:
     model = genai.GenerativeModel('gemini-pro')
 
     prompt_classify = f"""
-    Classifique o email como Produtivo ou Improdutivo.
-    Produtivo se o email exigir uma ação ou resposta específica.
-    Improdutivo se for um email genérico informativo.
-    Retorne apenas uma única palavra: Produtivo ou Improdutivo.
+    Classifique o email como 'Produtivo' ou 'Improdutivo'.
+    'Produtivo' se o email exigir uma ação ou resposta específica
+    'Improdutivo' se for um email genérico informativo.
+    'Produtivo' significa que o email deve ser respondido imediatamente.
+    'Improdutivo' significa que não é urgente responder o email no momento pode ser resolvido outro dia ou nem precisa de resposta.
 
     Email: "{text[:3000]}"
     """
