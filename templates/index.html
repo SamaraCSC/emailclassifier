@@ -21,14 +21,18 @@
       </div>
     </form>
 
-    {% if category %}
-    <div class="result">
-      <h2>📌 Resultado</h2>
-      <p><strong>Categoria:</strong> {{ category }}</p>
-      <h3>✉️ Resposta sugerida</h3>
-      <div class="reply">{{ response }}</div>
-    </div>
-    {% endif %}
+    {% if category and response %}
+        <div class="result-box">
+            <h2>Resultado</h2>
+            <p><strong>Categoria:</strong> {{ category }}</p>
+            <div class="response">
+                <p><strong>Resposta sugerida</strong></p>
+                <pre>{{ response }}</pre>
+            </div>
+            /* [Rest of the code for the result box] */
+            <a href="/" class="button-clear">Analisar Novo Email</a>
+        </div>
+        {% endif %}
   </div>
 </body>
 </html>
