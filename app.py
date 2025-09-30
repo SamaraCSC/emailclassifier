@@ -20,6 +20,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # Se o método for POST, processa os dados
     if request.method == 'POST':
         email_text = request.form.get('email_text')
         uploaded_file = request.files.get('email_file')
@@ -35,15 +36,17 @@ def index():
             content_to_process = email_text
         
         if not content_to_process.strip():
-            # Retorna um erro se nenhum conteúdo for encontrado
+            # Retorna um erro se nenhum conteúdo for enviado
             return render_template('index.html', error="Nenhum texto ou arquivo válido foi enviado.")
 
         # Chama a função principal de classificação
         result = classify_and_respond(content_to_process)
         
+        # Retorna a página COM os novos resultados
         return render_template('index.html', category=result['category'], response=result['response'], original_text=content_to_process)
 
-    return render_template('index.html')
+    # Se o método for GET (carregamento inicial da página), retorna a página sem resultados
+    return render_template('index.html', category=None, response=None, original_text=None)
 
 if __name__ == '__main__':
     # O Render usa um servidor WSGI como o Gunicorn, então isso é principalmente para teste local
